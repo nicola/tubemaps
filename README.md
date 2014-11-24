@@ -3,8 +3,8 @@
 Given a dataset, get all the tube/stations relations done!
 
 ## Install
-```javascript
-npm install --save tubemaps
+```bash
+$ npm install --save tubemaps
 ```
 
 Soon on **bower**.
