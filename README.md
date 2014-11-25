@@ -5,8 +5,8 @@ Given a dataset, get all the tube/stations relations done!
 ![London tubemap](https://raw.githubusercontent.com/nicola/tubemaps/master/thumbnail.png)
 
 ## Install
-```javascript
-npm install --save tubemaps
+```bash
+$ npm install --save tubemaps
 ```
 
 Soon on **bower**.
