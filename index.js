@@ -58,7 +58,6 @@ TubeMap.prototype.constructPath = function (dict, path, start, destination){
   if (path[path.length-1] && path[path.length-1].station2 == start) {
     return path;
   }
-  console.log(start.name, destination.name);
   path.push({station1: destination, station2: dict[destination.id]});
   return this.constructPath(dict, path, start, dict[destination.id]);
 };
@@ -71,9 +70,7 @@ TubeMap.prototype.path = function(start, destination, line){
   
   while (Q.length > 0) {
     var currentStation = Q.shift();
-    // console.log("-", currentStation.name);
     if (currentStation.id in V) {
-      console.log("already visited, skip");
       continue;
     }
     var conns = this.getAdjacent(currentStation, line);
@@ -86,9 +83,6 @@ TubeMap.prototype.path = function(start, destination, line){
         family[child.id] = currentStation;
       }
     });
-
-    // console.log("  ", conns.map(function(d) { return d.name}));
-    // console.log("  Q", Q.map(function(d){ return d.name}))
     V[currentStation.id] = currentStation;
     if (currentStation.id === destination.id) {
       return this.constructPath(family, [], start, destination)
