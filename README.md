@@ -70,12 +70,45 @@ var conns = london.path(euston, victoria, line)
 // [{station1: #euston, station2: #warrentStreet, line: #victoriaLine}]
 ```
 
-## Soon
-```javascript
-var tube = require('tubemaps').London;
+## Existing datasets
 
-// Show all paths, sorted by shortest
-tube.from('Victoria').to('Euston');
+#### London
+```javascript
+var Maps = require('tubemaps/maps');
+
+Maps("london", function(err, tube) {
+  var euston = tube.getStationByName("Euston");
+  var victoria = tube.getStationByName("Victoria");
+  console.log(tube.path(euston, victoria))
+})
+```
+
+#### Use yours
+
+Look at our datasets and make it identical but with your data
+
+```javascript
+var TubeMap = require('tubemaps').TubeMap;
+var readCSVs = require('tubemaps').readCSVs;
+
+var files = {
+  connections: __dirname + '/../datasets/london.connections.csv',
+  lines: __dirname + '/../datasets/london.lines.csv',
+  stations: __dirname + '/../datasets/london.stations.csv'
+};
+
+readCSVs(files, function(err, csvs) {
+
+  var tubemap = new TubeMap({
+    connections: csvs[0],
+    lines: csvs[1],
+    stations: csvs[2]
+  });
+
+  var victoriaLine = tubemap.getLineByName("Victoria Line");
+  console.log(tubemap.line(victoriaLine.line));
+
+});
 ```
 
 ## Want to contribute or add dataset?
