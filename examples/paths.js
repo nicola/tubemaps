@@ -14,9 +14,9 @@ readCSVs(files, function(err, csvs) {
     lines: csvs[1],
     stations: csvs[2]
   });
-  var euston = tubemap.getStationByName("Euston");
-  var victoria = tubemap.getStationByName("Victoria");
+  var euston = tubemap.getStationByName("Victoria");
+  var victoria = tubemap.getStationByName("Hammersmith");
   var victoriaLine = tubemap.getLineByName("Victoria Line");
 
-  console.log(tubemap.path(victoria, euston, victoriaLine.line));
+  console.log(tubemap.path(victoria, euston));
 });

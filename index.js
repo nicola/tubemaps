@@ -45,11 +45,15 @@ TubeMap.prototype.path = function(from, to) {
 };
 
 TubeMap.prototype.getAdjacent = function (root, line) {
-  return root.conns
-      .filter(function (c) {
-        return c.line == line;
-      })
-      .map(function(c) {
+  var conns = root.conns;
+  if (line) {
+    conns = conns.filter(function (c) {
+      return c.line == line;
+    });
+  }
+  return conns.map(function(c) {
+        c.station1.line = c.line;
+        c.station2.line = c.line;
         return c.station1.id !== root.id ? c.station1 : c.station2;
       });
 };
@@ -85,11 +89,15 @@ TubeMap.prototype.path = function(start, destination, line){
     });
     V[currentStation.id] = currentStation;
     if (currentStation.id === destination.id) {
-      return this.constructPath(family, [], start, destination)
-        .map(function(d) {
+      var path = this.constructPath(family, [], start, destination);
+
+      if (line) {
+        path = path.map(function(d) {
           d.line = line;
           return d;
         });
+      }
+      return path;
     }
   }
   return false;
