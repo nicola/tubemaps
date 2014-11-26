@@ -10,6 +10,7 @@ exports.TubeMap = TubeMap;
 function Station(opts) {
   this.id = opts.id;
   this.conns = opts.conns || [];
+  this.name = opts.name || "Unknown";
   this.display_name = opts.display_name || "Unknown";
   this.rail = opts.rail ? parseInt(opts.rail, 10) : null;
   this.total_lines = opts.total_lines ? parseInt(opts.total_lines, 10) : 1;
@@ -54,6 +55,10 @@ TubeMap.prototype.getLine = function(id) {
 
 TubeMap.prototype.getStation = function(id) {
   return this.stationsById[id];
+};
+
+TubeMap.prototype.getStationByName = function(display_name) {
+  return this.stationsByName[display_name];
 };
 
 TubeMap.prototype.make = function() {

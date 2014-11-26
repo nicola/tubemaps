@@ -15,4 +15,8 @@ readCSVs(files, function(err, csvs) {
     stations: csvs[2]
   });
 
+  // How many connections does Victoria station have?
+  var victoria = tubemap.getStationByName('Victoria');
+  console.log(victoria.conns.length / 2)
+
 });
