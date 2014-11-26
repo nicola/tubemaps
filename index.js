@@ -23,6 +23,7 @@ function TubeMap(opts) {
   this.stationsById = {};
   this.stationsByName = {};
   this.linesById = {};
+  this.linesByName = {};
   this.stations = opts.stations || [];
   this.connections = opts.connections || [];
   this.lines = opts.lines || [];
@@ -43,10 +44,10 @@ TubeMap.prototype.path = function(from, to) {
   return [];
 };
 
-TubeMap.prototype.line = function(name) {
-  var line = this.getLine(name);
-
-  return [];
+TubeMap.prototype.line = function(id) {
+  return this.connections.filter(function(d) {
+    return d.line == id;
+  });
 };
 
 TubeMap.prototype.makeConnection = function(c) {
@@ -60,11 +61,16 @@ TubeMap.prototype.makeConnection = function(c) {
 
 TubeMap.prototype.makeLine = function(r) {
   this.linesById[r.line] = r;
-}
+  this.linesByName[r.name] = r;
+};
 
 TubeMap.prototype.getLine = function(id) {
   return this.linesById[id];
 };
+
+TubeMap.prototype.getLineByName = function(name) {
+  return this.linesByName[name];
+}
 
 TubeMap.prototype.getStation = function(id) {
   return this.stationsById[id];

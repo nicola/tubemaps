@@ -15,6 +15,7 @@ readCSVs(files, function(err, csvs) {
     stations: csvs[2]
   });
 
-  console.log(tubemap.line("Victoria line"));
+  var victoriaLine = tubemap.getLineByName("Victoria Line");
+  console.log(tubemap.line(victoriaLine.line));
 
 });
