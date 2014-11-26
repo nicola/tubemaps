@@ -1,6 +1,14 @@
+var async = require('async');
+var fs = require('fs');
+var path = require('path');
+var CSVStream = require('csv-streamify');
+var JSONStream = require('JSONStream');
+var __ = require('highland')
+
 exports.TubeMap = TubeMap;
 
 function Station(opts) {
+  this.id = opts.id;
   this.conns = opts.conns || [];
   this.display_name = opts.display_name || "Unknown";
   this.rail = opts.rail ? parseInt(opts.rail, 10) : null;
@@ -15,39 +23,63 @@ function TubeMap(opts) {
   this.stationsByName = {};
   this.linesById = {};
   this.stations = opts.stations || [];
-  this.lines = opts.lines || [];
   this.connections = opts.connections || [];
+  this.lines = opts.lines || [];
 
-  this.calculate();
+  this.make();
+}
+
+TubeMap.prototype.makeStation = function(s) {
+  s = new Station(s);
+  this.stationsById[s.id] = s;
+  this.stationsByName[s.name] = s;
+};
+
+TubeMap.prototype.makeConnection = function(c) {
+  c.station1 = this.stationsById[c.station1];
+  c.station2 = this.stationsById[c.station2];
+  c.time = parseInt(c.time, 10);
+
+  c.station1.conns.push(c);
+  c.station2.conns.push(c);
+};
+
+TubeMap.prototype.makeLine = function(r) {
+  this.linesById[r.line] = r;
 }
 
 TubeMap.prototype.getLine = function(id) {
-  return tubemap.linesById[id];
+  return this.linesById[id];
 };
 
 TubeMap.prototype.getStation = function(id) {
-  return tubemap.stationsById[id];
+  return this.stationsById[id];
 };
 
-TubeMap.prototype.calculate = function() {
-  var tubemap = this;
+TubeMap.prototype.make = function() {
+  this.stations.forEach(this.makeStation.bind(this));
+  this.connections.forEach(this.makeConnection.bind(this));
+  this.lines.forEach(this.makeLine.bind(this));
+};
 
-  this.stations.forEach(function(s) {
-    s = new Station(s);
-    tubemap.stationsById[s.id] = s;
-    tubemap.stationsByName[s.name] = s;
-  });
+exports.readCSV = function (file, cb) {
+  __(fs
+    .createReadStream(file)
+    .pipe(CSVStream({objectMode: true, columns: true})))
+    .errors(cb)
+    .collect()
+    .apply(function(lines) {
+      cb(null, lines);
+    });
+};
 
-  this.connections.forEach(function(c) {
-    c.station1 = tubemap.stationsById[c.station1];
-    c.station2 = tubemap.stationsById[c.station2];
-    c.time = parseInt(c.time, 10);
-
-    c.station1.conns.push(c);
-    c.station2.conns.push(c);
-  });
-
-  this.lines.forEach(function(r) {
-    tubemap.linesById[r.line] = r;
-  });
+exports.readCSVs = function (opts, cb) {
+  async.map(
+    [
+      opts.connections,
+      opts.lines,
+      opts.stations
+    ],
+    exports.readCSV,
+    cb);
 };

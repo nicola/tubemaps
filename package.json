@@ -15,5 +15,17 @@
   "bugs": {
     "url": "https://github.com/nicola/tubemaps/issues"
   },
-  "homepage": "https://github.com/nicola/tubemaps"
+  "homepage": "https://github.com/nicola/tubemaps",
+  "dependencies": {
+    "JSONStream": "^0.10.0",
+    "async": "^0.9.0",
+    "csv-streamify": "^1.0.0",
+    "highland": "^2.0.0",
+    "promised-csv": "^1.0.1",
+    "q": "^1.1.2"
+  },
+  "devDependencies": {
+    "q": "^1.1.2",
+    "q-io": "^1.11.6"
+  }
 }
