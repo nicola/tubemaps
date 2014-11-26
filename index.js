@@ -44,6 +44,63 @@ TubeMap.prototype.path = function(from, to) {
   return [];
 };
 
+TubeMap.prototype.getAdjacent = function (root, line) {
+  return root.conns
+      .filter(function (c) {
+        return c.line == line;
+      })
+      .map(function(c) {
+        return c.station1.id !== root.id ? c.station1 : c.station2;
+      });
+};
+
+TubeMap.prototype.constructPath = function (dict, path, start, destination){
+  if (path[path.length-1] && path[path.length-1].station2 == start) {
+    return path;
+  }
+  console.log(start.name, destination.name);
+  path.push({station1: destination, station2: dict[destination.id]});
+  return this.constructPath(dict, path, start, dict[destination.id]);
+};
+
+TubeMap.prototype.path = function(start, destination, line){
+  var Q = [start];
+  var V = {};
+  var family = {};
+  family[start.id] = null;
+  
+  while (Q.length > 0) {
+    var currentStation = Q.shift();
+    // console.log("-", currentStation.name);
+    if (currentStation.id in V) {
+      console.log("already visited, skip");
+      continue;
+    }
+    var conns = this.getAdjacent(currentStation, line);
+    conns.forEach(function(child) {
+      if (!(child.id in V)){
+        Q.push(child);
+      }
+
+      if (!(child.id in family)){
+        family[child.id] = currentStation;
+      }
+    });
+
+    // console.log("  ", conns.map(function(d) { return d.name}));
+    // console.log("  Q", Q.map(function(d){ return d.name}))
+    V[currentStation.id] = currentStation;
+    if (currentStation.id === destination.id) {
+      return this.constructPath(family, [], start, destination)
+        .map(function(d) {
+          d.line = line;
+          return d;
+        });
+    }
+  }
+  return false;
+};
+
 TubeMap.prototype.line = function(id) {
   return this.connections.filter(function(d) {
     return d.line == id;
