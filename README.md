@@ -20,24 +20,24 @@ Soon on **bower**.
 
 ```sh
 $ tubemaps path  --from "Euston" --to "Hammersmith"
-Piccadilly Line: Hammersmith to Barons Court
-Piccadilly Line: Barons Court to Earl's Court
-Piccadilly Line: Earl's Court to Gloucester Road
-Piccadilly Line: Gloucester Road to South Kensington
-Piccadilly Line: South Kensington to Knightsbridge
-Piccadilly Line: Knightsbridge to Hyde Park Corner
-Piccadilly Line: Hyde Park Corner to Green Park
-Victoria Line: Green Park to Oxford Circus
-Victoria Line: Oxford Circus to Warren Street
-Victoria Line: Warren Street to Euston
+# Piccadilly Line: Hammersmith to Barons Court
+# Piccadilly Line: Barons Court to Earl's Court
+# Piccadilly Line: Earl's Court to Gloucester Road
+# Piccadilly Line: Gloucester Road to South Kensington
+# Piccadilly Line: South Kensington to Knightsbridge
+# Piccadilly Line: Knightsbridge to Hyde Park Corner
+# Piccadilly Line: Hyde Park Corner to Green Park
+# Victoria Line: Green Park to Oxford Circus
+# Victoria Line: Oxford Circus to Warren Street
+# Victoria Line: Warren Street to Euston
 
 $ tubemaps station "Euston" --london                    
-Northern Line: Camden Town
-Victoria Line: King's Cross St. Pancras
-Northern Line: Mornington Crescent
-Victoria Line: Warren Street
-Victoria Line: King's Cross St. Pancras
-Victoria Line: Warren Street
+# Northern Line: Camden Town
+# Victoria Line: King's Cross St. Pancras
+# Northern Line: Mornington Crescent
+# Victoria Line: Warren Street
+# Victoria Line: King's Cross St. Pancras
+# Victoria Line: Warren Street
 ```
 
 ## NodeJS Library
