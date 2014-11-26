@@ -36,6 +36,19 @@ TubeMap.prototype.makeStation = function(s) {
   this.stationsByName[s.name] = s;
 };
 
+TubeMap.prototype.path = function(from, to) {
+  var station1 = this.getStationByName(from);
+  var station2 = this.getStationByName(to);
+
+  return [];
+};
+
+TubeMap.prototype.line = function(name) {
+  var line = this.getLine(name);
+
+  return [];
+};
+
 TubeMap.prototype.makeConnection = function(c) {
   c.station1 = this.stationsById[c.station1];
   c.station2 = this.stationsById[c.station2];
