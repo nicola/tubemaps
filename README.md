@@ -9,9 +9,68 @@ Given a dataset, get all the tube/stations relations done!
 $ npm install --save tubemaps
 ```
 
+For command-line use:
+```bash
+$ npm install --g tubemaps
+```
+
 Soon on **bower**.
 
-## Usage
+## Command line tool
+
+
+
+```sh
+$ tubemaps --help
+
+Usage: tubemaps <command>
+
+command     
+  path        Get path from one station to another
+  station     Get path from one station to another
+```
+
+#### Find a path
+
+```sh
+$ tubemaps path --help
+Usage: tubemaps <command>
+Options:
+   --city     What city? e.g. london
+   --london   Is London the city?
+   --from     From this station
+   --to       To this station
+   --line     On this line
+
+Get path from one station to another
+
+$ tubemaps path  --from "Euston" --to "Hammersmith"
+
+Piccadilly Line: Hammersmith to Barons Court
+Piccadilly Line: Barons Court to Earl's Court
+Piccadilly Line: Earl's Court to Gloucester Road
+Piccadilly Line: Gloucester Road to South Kensington
+Piccadilly Line: South Kensington to Knightsbridge
+Piccadilly Line: Knightsbridge to Hyde Park Corner
+Piccadilly Line: Hyde Park Corner to Green Park
+Victoria Line: Green Park to Oxford Circus
+Victoria Line: Oxford Circus to Warren Street
+Victoria Line: Warren Street to Euston
+```
+
+#### Connections of a station
+
+```sh
+$ tubemaps station "Euston" --london                    
+Northern Line: Camden Town
+Victoria Line: King's Cross St. Pancras
+Northern Line: Mornington Crescent
+Victoria Line: Warren Street
+Victoria Line: King's Cross St. Pancras
+Victoria Line: Warren Street
+```
+
+## NodeJS Library
 ```javascript
 var TubeMap = require('tubemaps').TubeMap;
 var london = new TubeMap({
@@ -20,11 +79,25 @@ var london = new TubeMap({
   connections: csv.connections
 });
 
-london.getStation('Victoria');
+// Find information about a station
+var victoriaStation = london.getStationByName('Victoria');
 // {conns:[{display_name: "Euston"}, ...], ..}
 
-london.getLine('Victoria line');
+// Find information a line
+var victoriaLine = london.getLineByName('Victoria Line');
 // [station1, station2,..]
+
+// Find all connections in a line
+var conns = london.line(victoriaLine)
+// [{station1: #euston, station2: #warrentStreet}]
+
+// Find path between two stations
+var conns = london.path(euston, victoria)
+// [{station1: #euston, station2: #warrentStreet, line: #victoriaLine}]
+
+// Find path between two stations in a line
+var conns = london.path(euston, victoria, line)
+// [{station1: #euston, station2: #warrentStreet, line: #victoriaLine}]
 ```
 
 ## Soon
