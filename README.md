@@ -18,34 +18,8 @@ Soon on **bower**.
 
 ## Command line tool
 
-
-
 ```sh
-$ tubemaps --help
-
-Usage: tubemaps <command>
-
-command     
-  path        Get path from one station to another
-  station     Get path from one station to another
-```
-
-#### Find a path
-
-```sh
-$ tubemaps path --help
-Usage: tubemaps <command>
-Options:
-   --city     What city? e.g. london
-   --london   Is London the city?
-   --from     From this station
-   --to       To this station
-   --line     On this line
-
-Get path from one station to another
-
 $ tubemaps path  --from "Euston" --to "Hammersmith"
-
 Piccadilly Line: Hammersmith to Barons Court
 Piccadilly Line: Barons Court to Earl's Court
 Piccadilly Line: Earl's Court to Gloucester Road
@@ -56,11 +30,7 @@ Piccadilly Line: Hyde Park Corner to Green Park
 Victoria Line: Green Park to Oxford Circus
 Victoria Line: Oxford Circus to Warren Street
 Victoria Line: Warren Street to Euston
-```
 
-#### Connections of a station
-
-```sh
 $ tubemaps station "Euston" --london                    
 Northern Line: Camden Town
 Victoria Line: King's Cross St. Pancras
