@@ -18,6 +18,8 @@ Soon on **bower**.
 
 ## Command line tool
 
+For now Command line only supports London
+
 ```sh
 $ tubemaps path  --from "Euston" --to "Hammersmith"
 # Piccadilly Line: Hammersmith to Barons Court
