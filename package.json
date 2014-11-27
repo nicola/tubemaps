@@ -21,11 +21,7 @@
     "async": "^0.9.0",
     "csv-streamify": "^1.0.0",
     "highland": "^2.0.0",
-    "nomnom": "^1.8.1",
-  },
-  "devDependencies": {
-    "q": "^1.1.2",
-    "q-io": "^1.11.6"
+    "nomnom": "^1.8.1"
   },
   "bin": {
     "tubemaps": "./bin/tubemaps.js"
