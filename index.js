@@ -67,10 +67,10 @@ TubeMap.prototype.constructPath = function (dict, path, start, destination){
 };
 
 TubeMap.prototype.path = function(start, destination, line){
-  var Q = [start];
+  var Q = [destination];
   var V = {};
   var family = {};
-  family[start.id] = null;
+  family[destination.id] = null;
   
   while (Q.length > 0) {
     var currentStation = Q.shift();
@@ -88,8 +88,8 @@ TubeMap.prototype.path = function(start, destination, line){
       }
     });
     V[currentStation.id] = currentStation;
-    if (currentStation.id === destination.id) {
-      var path = this.constructPath(family, [], start, destination);
+    if (currentStation.id === start.id) {
+      var path = this.constructPath(family, [], destination, start);
 
       if (line) {
         path = path.map(function(d) {

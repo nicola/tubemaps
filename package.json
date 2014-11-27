@@ -22,8 +22,6 @@
     "csv-streamify": "^1.0.0",
     "highland": "^2.0.0",
     "nomnom": "^1.8.1",
-    "promised-csv": "^1.0.1",
-    "q": "^1.1.2"
   },
   "devDependencies": {
     "q": "^1.1.2",
