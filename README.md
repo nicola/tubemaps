@@ -4,6 +4,8 @@ Given a dataset, get all the tube/stations relations done!
 
 ![London tubemap](https://raw.githubusercontent.com/nicola/tubemaps/master/thumbnail.png)
 
+Image from [Visualizing the tube in D3](http://bl.ocks.org/nicola/69730fc4180246b0d56d) that triggered the idea for this library
+
 ## Install
 ```bash
 $ npm install --save tubemaps
