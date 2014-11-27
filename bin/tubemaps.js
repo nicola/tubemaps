@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var Maps = require('../maps');
+var Maps = require('../').Maps;
 var parser = require("nomnom");
 
 parser.command('path')

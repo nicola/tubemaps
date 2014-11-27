@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var readCSVs = require('../').readCSVs;
+var readCSVs = require('../csv').readCSVs;
 var fs = require('fs');
 var nomnom = require('nomnom');
 var datasets = require("./");

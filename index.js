@@ -1,11 +1,12 @@
 var async = require('async');
 var fs = require('fs');
 var path = require('path');
-var CSVStream = require('csv-streamify');
 var JSONStream = require('JSONStream');
-var __ = require('highland')
+var __ = require('highland');
+var datasets = require('./datasets');
 
 exports.TubeMap = TubeMap;
+exports.Maps = Maps;
 
 function Station(opts) {
   this.id = opts.id;
@@ -145,24 +146,7 @@ TubeMap.prototype.make = function() {
   this.lines.forEach(this.makeLine.bind(this));
 };
 
-exports.readCSV = function (file, cb) {
-  __(fs
-    .createReadStream(file)
-    .pipe(CSVStream({objectMode: true, columns: true})))
-    .errors(cb)
-    .collect()
-    .apply(function(lines) {
-      cb(null, lines);
-    });
-};
-
-exports.readCSVs = function (opts, cb) {
-  async.map(
-    [
-      opts.connections,
-      opts.lines,
-      opts.stations
-    ],
-    exports.readCSV,
-    cb);
+function Maps (city, cb) {
+  var dataset = require(datasets[city].json);
+  cb(null, new TubeMap(dataset));
 };
