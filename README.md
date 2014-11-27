@@ -24,16 +24,16 @@ For now Command line only supports London
 
 ```sh
 $ tubemaps path  --from "Euston" --to "Hammersmith"
-Victoria Line: Euston to Warren Street
-Victoria Line: Warren Street to Oxford Circus
-Victoria Line: Oxford Circus to Green Park
-Victoria Line: Green Park to Victoria
-Victoria Line: Victoria to Sloane Square
-District Line: Sloane Square to South Kensington
-Piccadilly Line: South Kensington to Gloucester Road
-Piccadilly Line: Gloucester Road to Earl's Court
-District Line: Earl's Court to Barons Court
-Piccadilly Line: Barons Court to Hammersmith
+# Victoria Line: Euston to Warren Street
+# Victoria Line: Warren Street to Oxford Circus
+# Victoria Line: Oxford Circus to Green Park
+# Victoria Line: Green Park to Victoria
+# Victoria Line: Victoria to Sloane Square
+# District Line: Sloane Square to South Kensington
+# Piccadilly Line: South Kensington to Gloucester Road
+# Piccadilly Line: Gloucester Road to Earl's Court
+# District Line: Earl's Court to Barons Court
+# Piccadilly Line: Barons Court to Hammersmith
 
 $ tubemaps station "Euston" --london                    
 # Northern Line: Camden Town
