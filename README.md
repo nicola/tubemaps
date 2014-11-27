@@ -93,7 +93,7 @@ Look at our datasets and make it identical but with your data
 
 ```javascript
 var TubeMap = require('tubemaps').TubeMap;
-var readCSVs = require('tubemaps').readCSVs;
+var readCSVs = require('tubemaps/csv').readCSVs;
 
 var files = {
   connections: __dirname + '/../datasets/london.connections.csv',

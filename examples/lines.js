@@ -1,5 +1,5 @@
 var TubeMap = require('../').TubeMap;
-var readCSVs = require('../').readCSVs;
+var readCSVs = require('../csv').readCSVs;
 
 var files = {
   connections: __dirname + '/../datasets/london.connections.csv',

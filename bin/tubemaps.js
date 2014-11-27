@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-
-var Maps = require('../maps');
-
-
+var Maps = require('../').Maps;
 var parser = require("nomnom");
+
 parser.command('path')
   .option('city', {
     help: "What city? e.g. london",
@@ -24,9 +22,7 @@ parser.command('path')
   .callback(function(opts) {
     var city = opts.city || opts.london ? "london" : false || "london";
     Maps(city, function(err, tube) {
-
       try {
-        
         var from = tube.getStationByName(opts.from);
         var to = tube.getStationByName(opts.to);
         var line = tube.getLineByName(opts.line);
@@ -52,7 +48,6 @@ parser.command('station')
   .callback(function(opts) {
     var city = opts.city || opts.london ? "london" : false || "london";
     Maps(city, function(err, tube) {
-
       try {
         var adj = tube.getAdjacent(tube.getStationByName(opts[1]));
         console.log(adj.map(function(d) {
@@ -64,6 +59,5 @@ parser.command('station')
     });
   })
   .help("Get path from one station to another");
-
 
 parser.parse();
