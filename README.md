@@ -115,6 +115,11 @@ readCSVs(files, function(err, csvs) {
 });
 ```
 
+## Examples
+
+- [http://bl.ocks.org/nicola/dd355954e9b4ae524963](Visualizing tube closure with d3)
+- [http://bl.ocks.org/nicola/20beed2981b6607be961](Visualizing tube map)
+
 ## Want to contribute or add dataset?
 
 - Ping me on twitter @nicolagreco, or a PR here.
