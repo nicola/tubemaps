@@ -25,5 +25,8 @@
   },
   "bin": {
     "tubemaps": "./bin/tubemaps.js"
+  },
+  "scripts": {
+    "build": "browserify -s TubeMaps -e index.js > dist/tubemaps.js"
   }
 }

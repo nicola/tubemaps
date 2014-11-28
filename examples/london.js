@@ -1,6 +1,7 @@
 var TubeMap = require('../').TubeMap;
 var Maps = require('../').Maps;
+var london = require('../datasets/london.json')
 
-Maps('london', function(err, tube) {
-  console.log(tube.getStationByName('Victoria'));
-});
+var tube = new TubeMap(london);
+
+module.exports = tube;
