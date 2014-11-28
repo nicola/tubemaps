@@ -4,7 +4,7 @@ Given a dataset, get all the tube/stations relations done!
 
 ![London tubemap](https://raw.githubusercontent.com/nicola/tubemaps/master/thumbnail.png)
 
-[Visualizing the tube](http://bl.ocks.org/nicola/69730fc4180246b0d56d) in D3 and TubeMaps.
+[Visualizing the tube](http://bl.ocks.org/nicola/20beed2981b6607be961) in D3 and TubeMaps.
 
 ## Install
 ```bash
