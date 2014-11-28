@@ -1,0 +1,22 @@
+{
+  "name": "TubeMaps",
+  "main": "dist/tubemaps.js",
+  "version": "1.1.0",
+  "homepage": "https://github.com/nicola/tubemaps",
+  "authors": [
+    "nicola <notsecurity@gmail.com>"
+  ],
+  "description": "Handle tube data easily",
+  "keywords": [
+    "tubemap",
+    "network"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
