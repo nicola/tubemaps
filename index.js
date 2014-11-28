@@ -38,13 +38,6 @@ TubeMap.prototype.makeStation = function(s) {
   this.stationsByName[s.name] = s;
 };
 
-TubeMap.prototype.path = function(from, to) {
-  var station1 = this.getStationByName(from);
-  var station2 = this.getStationByName(to);
-
-  return [];
-};
-
 TubeMap.prototype.getAdjacent = function (root, line) {
   var conns = root.conns;
   if (line) {
