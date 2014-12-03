@@ -1,10 +1,11 @@
 # Tubemaps
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/nicola/tubemaps?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Given a dataset, get all the tube/stations relations done!
 
 ![London tubemap](https://raw.githubusercontent.com/nicola/tubemaps/master/thumbnail.png)
 
-Image from [Visualizing the tube in D3](http://bl.ocks.org/nicola/69730fc4180246b0d56d) that triggered the idea for this library
+[Visualizing the tube](http://bl.ocks.org/nicola/20beed2981b6607be961) in D3 and TubeMaps.
 
 ## Install
 ```bash
@@ -114,6 +115,12 @@ readCSVs(files, function(err, csvs) {
 
 });
 ```
+
+## Examples
+
+- [London Tubemap showing closures](http://bl.ocks.org/nicola/dd355954e9b4ae524963)
+- [London Tubemap visualization](http://bl.ocks.org/nicola/20beed2981b6607be961)
+- [London Tubemap with Voronoi visualization](http://bl.ocks.org/nicola/10e25b18aca0bc05b192)
 
 ## Want to contribute or add dataset?
 
