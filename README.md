@@ -118,8 +118,9 @@ readCSVs(files, function(err, csvs) {
 
 ## Examples
 
-- [Visualizing tube closure with d3](http://bl.ocks.org/nicola/dd355954e9b4ae524963)
-- [Visualizing tube map](http://bl.ocks.org/nicola/20beed2981b6607be961)
+- [London Tubemap showing closures](http://bl.ocks.org/nicola/dd355954e9b4ae524963)
+- [London Tubemap visualization](http://bl.ocks.org/nicola/20beed2981b6607be961)
+- [London Tubemap with Voronoi visualization](http://bl.ocks.org/nicola/10e25b18aca0bc05b192)
 
 ## Want to contribute or add dataset?
 
