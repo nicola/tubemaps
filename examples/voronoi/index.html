@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Graph map</title>
+  <meta charset="utf-8" />
+  <style type="text/css">
+    svg {
+      font: 10px sans-serif;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: #666;
+      stroke-width: 0.3;
+    }
+
+    path {
+      stroke: #fff;
+    }
+
+    circle.station {
+      stroke-width: 0.5;
+    }
+
+    .voronoi path {
+      stroke: #aaa;
+    }
+
+    circle {
+      fill: #000;
+      pointer-events: none;
+    }
+
+    .q0-9 { fill: #d3d3d3;}
+    .q1-9 { fill: #efefef; }
+    .q2-9 { fill: #fefefe; }
+    .q3-9 { fill: #eeeeee; }
+    .q4-9 { fill: #dedede; }
+    .q5-9 { fill: #d0d0d0; }
+    .q6-9 { fill: #eaeaea; }
+    .q7-9 { fill: #e9e9e9; }
+    .q8-9 { fill: #f2f2f2; }
+  </style>
+</head>
+<body>
+ 
+  <div id="map"></div>
+ 
+  <script type="text/javascript" src="tubemaps.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.js"></script>
+  <script type="text/javascript">
+
+  function polygon(d) {
+    return "M" + d.join("L") + "Z";
+  }
+
+  var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    w = Math.max(760, window.innerWidth) - margin.left - margin.right,
+    h = Math.max(500, window.innerHeight) - margin.top - margin.bottom;
+
+  var voronoi = d3.geom.voronoi()
+    .clipExtent([[0, 0], [w, h]]);
+
+  d3.json('london.json', function(data) {
+
+    data.stations.forEach(function(d) {
+      d.longitude = +d.longitude;
+      d.latitude = +d.latitude;
+    })
+    var tube = new TubeMaps.TubeMap(data)
+    
+    // Find min and max long and lat
+    var minLat = d3.min(tube.stations, function(d) {return d.latitude});
+    var minLon = d3.min(tube.stations, function(d) {return d.longitude});
+    var maxLat = d3.max(tube.stations, function(d) {return d.latitude});
+    var maxLon = d3.max(tube.stations, function(d) {return d.longitude});
+
+    // Set up the scales
+    var x = d3.scale.linear()
+      .domain([minLon, maxLon])
+      .range([0, w]);
+
+    var y = d3.scale.linear()
+      .domain([minLat, maxLat])
+      .range([h, 0]);
+
+    // Set up the axis
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .tickSize(-h);
+
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .ticks(5)
+      .tickSize(-w);
+
+    // Set up what will happen when zooming
+    var zoom = d3.behavior.zoom()
+      .x(x)
+      .y(y)
+      .scaleExtent([1, 10])
+      .on("zoom", zoomed);
+
+    /*
+    Drawing from now on
+    */
+
+    // Setting up the canvas
+    var vis = d3.select("#map").append("svg")
+      .attr("width", w + margin.left + margin.right)
+      .attr("height", h + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    // Make sure it is zoomable
+    d3.select("#map svg")
+      .call(zoom);
+
+    var vornoitube = vis.append("g")
+      .attr('class','voronoi')
+      .selectAll("path")
+      .data(voronoi(tube.stations.map(function(d) {
+        return [x(d.longitude), y(d.latitude)]
+      })), polygon);
+
+    vornoitube.exit().remove();
+    vornoitube.enter().append("path")
+        .attr("class", function(d, i) { return "q" + (i % 9) + "-9"; })
+        .attr("d", polygon);
+    vornoitube.order();
+
+    // Drawing lines between stations
+    var route = vis.selectAll("line.route")
+      .data(tube.connections)
+      .enter().append("svg:line")
+        .attr("class", "route")
+        .attr("stroke", function(d) { return '#'+tube.linesById[d.line].colour; })
+        .attr("stroke-linecap", 'round')
+        .attr("x1", function(d) { return x(d.station1.longitude); })
+        .attr("y1", function(d) { return y(d.station1.latitude); })
+        .attr("x2", function(d) { return x(d.station2.longitude); })
+        .attr("y2", function(d) { return y(d.station2.latitude); })
+        .style("opacity", 1)
+
+    // Striped stations (see official map)
+    var stripe = vis.selectAll("line.stripe")
+      .data(tube.connections.filter(function(d) {
+        return tube.linesById[d.line].stripe != "NULL";
+      }))
+      .enter().append("svg:line")
+        .attr("class", "stripe")
+        .attr("stroke", function(d) { return '#'+tube.linesById[d.line].stripe; })
+        .attr("stroke-linecap", 'round')
+        .attr("x1", function(d) { return x(d.station1.longitude); })
+        .attr("y1", function(d) { return y(d.station1.latitude); })
+        .attr("x2", function(d) { return x(d.station2.longitude); })
+        .attr("y2", function(d) { return y(d.station2.latitude); })
+
+    // Drawing all the stations
+    var station = vis.selectAll("circle.station")
+      .data(tube.stations)
+      .enter().append("svg:circle")
+        .attr("class", "station")
+        .attr("id", function(d) { return 'station'+d.id })
+        .attr("cx", function(d) { return x(d.longitude); })
+        .attr("cy", function(d) { return y(d.latitude); })
+        .attr("data-cx", function(d) { return d.longitude; })
+        .attr("data-cy", function(d) { return d.latitude; })
+        .attr("title", function(d) { return d.name })
+        .style("stroke", 'gray')
+        .style("fill", '#ffffff')
+        .style("opacity", 1)
+        .on('mouseover', function(d,i) {
+          d3.selectAll('#station'+d.id)
+            .transition()
+              .duration(25)
+              .attr("r", 3 / zoom.scale())
+              .style("stroke", 'black')
+              .style("stroke-width", 1 / zoom.scale())
+              .style('opacity', 1);
+        })
+        .on('mouseout', function(d,i) {
+          d3.selectAll('#station'+d.id)
+            .transition()
+              .attr("r", 2.5 / zoom.scale())
+              .duration(25)
+              .style("stroke-width", 0.5 / zoom.scale())
+              .style("stroke", 'gray')
+              .style('opacity', 0.3);
+        })
+
+    // Adding axis
+    vis.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + h + ")")
+        .call(xAxis);
+
+    vis.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+  zoomed()
+
+  function zoomed() {
+
+    // Reset axis
+    vis.select(".x.axis").call(xAxis);
+    vis.select(".y.axis").call(yAxis);
+    vis.selectAll("line.route")
+      .attr("stroke-width", 1 / (zoom.scale()))
+    vis.selectAll("line.stripe")
+      .attr("stroke-width", 0.5 / (zoom.scale()))
+
+    // Rescale circles
+    vis.selectAll("circle")
+      .attr("transform", "translate(" + zoom.translate() + ")scale(" + zoom.scale() + ")")
+      .style("stroke-width", 1 / zoom.scale())
+      .attr("r", 2.5 / zoom.scale());
+
+    // Rescale lines
+    vis.selectAll("line.route, line.stripe")
+      .attr("transform", "translate(" + zoom.translate() + ")scale(" + zoom.scale() + ")")
+
+    // Voronoi scale
+    vis.selectAll("g.voronoi")
+      .attr("transform", "translate(" + zoom.translate() + ")scale(" + zoom.scale() + ")")
+    vis.selectAll(".voronoi path")
+      .attr("stroke-width", 0.5 / (zoom.scale()))
+  }
+ 
+});  
+    
+  </script>
+</body>
+</html>
